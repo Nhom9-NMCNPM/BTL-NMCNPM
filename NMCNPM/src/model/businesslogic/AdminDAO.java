@@ -1,6 +1,7 @@
 package model.businesslogic;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import model.bean.SuKien;
+import model.bean.ThamGia;
 
 public class AdminDAO {
 	
@@ -32,5 +34,35 @@ public class AdminDAO {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return listSK;
+	}
+	public ArrayList<ThamGia> getThamGiaTheoSuKien(Connection conn, String maSK){
+		ArrayList<ThamGia> listThamGia = new ArrayList<ThamGia>();
+		String sql = "select tg.id_SHK, shk.TenChuHo,tg.Status,tg.NguoiDaiDien from ThamGia tg,SoHoKhau shk "
+						+"where tg.id_SHK = shk.id_SHK and tg.id_SK = ? "
+						+"order by shk.TenChuHo";
+				
+		try {
+			PreparedStatement preSta = conn.prepareStatement(sql);
+			preSta.setString(1, maSK);
+			ResultSet result = preSta.executeQuery();
+			while(result.next()) {
+				ThamGia tg = new ThamGia();
+				String shk = result.getString(1);
+				String ch = result.getString(2);
+				boolean tt = result.getBoolean(3);
+				String ng = result.getString(4);
+				tg.setIdSK(maSK);
+				tg.setIdSHK(shk);
+				tg.setChuHo(ch);
+				tg.setStatus(tt);
+				tg.setDaiDien(ng);
+				listThamGia.add(tg);
+			}
+			result.close();
+			preSta.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return listThamGia;
 	}
 }
