@@ -38,4 +38,16 @@ public class SKTheoHo {
 	public void setNguoiDaiDien(String nguoiDaiDien) {
 		this.nguoiDaiDien = nguoiDaiDien;
 	}
+	
+	public SKTheoHo(String tenSK, Date ngay, Date time, boolean status, String nguoiDaiDien) {
+		super();
+		this.tenSK = tenSK;
+		this.ngay = ngay;
+		this.time = time;
+		this.status = status;
+		this.nguoiDaiDien = nguoiDaiDien;
+	}
+	public SKTheoHo() {
+		super();
+	}
 }
