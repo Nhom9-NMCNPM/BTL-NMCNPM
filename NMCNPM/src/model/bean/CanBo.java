@@ -3,7 +3,7 @@ package model.bean;
 import java.util.Date;
 
 public class CanBo {
-	private String maCB;
+//	private String maCB;
 	private String tenCB;
 	private Date birthCB;
 	private String chucVu;
