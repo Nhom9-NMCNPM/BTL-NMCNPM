@@ -9,7 +9,8 @@ public class DBConnection {
 		Connection conn= null;
 		try {
 			String url = "jdbc:sqlserver://DESKTOP-77O14EV\\SQLEXPRESS:1433;databaseName=dbCNPM;";
-			conn = DriverManager.getConnection(url,"sa", "12345678");
+			// Đổi 'DESKTOP-77O14EV' thành tên máy local 
+			conn = DriverManager.getConnection(url,"sa", "12345678"); // đổi mk 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
 		}
