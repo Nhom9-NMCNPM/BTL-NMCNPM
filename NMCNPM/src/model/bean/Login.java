@@ -2,6 +2,10 @@ package model.bean;
 
 public class Login {
 	
+	public String getUser() {
+		return user;
+	}
+	
 	public Login(String user) {
 		super();
 		this.user = user;
@@ -10,9 +14,7 @@ public class Login {
 	private String user;
 	
 
-	public String getUser() {
-		return user;
-	}
+	
 
 	public void setUser(String user) {
 		this.user = user;
