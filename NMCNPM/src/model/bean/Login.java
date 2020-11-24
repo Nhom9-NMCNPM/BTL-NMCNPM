@@ -1,12 +1,14 @@
 package model.bean;
 
 public class Login {
-	private String user;
 	
 	public Login(String user) {
 		super();
 		this.user = user;
 	}
+
+	private String user;
+	
 
 	public String getUser() {
 		return user;
