@@ -65,4 +65,40 @@ public class AdminDAO {
 		}
 		return listThamGia;
 	}
+	
+	public ArrayList<String> getListSHK(Connection conn){
+		ArrayList<String> listSHK= new ArrayList<String>();
+		String sql="Select id_SHK from SoHoKhau";
+		Statement statement;
+		try {
+			statement= conn.createStatement();
+			ResultSet rs= statement.executeQuery(sql);
+			while( rs.next()) {
+				listSHK.add(rs.getString(1));
+			}
+			rs.close();
+			statement.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		return listSHK;
+	}
+	
+	public void xoaSuKien(Connection conn, String maSK) {
+		String sql1 = "Delete from ThamGia where id_SK=?";
+		String sql2 = "Delete from SuKien where id_SK=?";
+		try {
+			PreparedStatement preSta = conn.prepareStatement(sql1);
+			preSta.setString (1, maSK);
+			preSta.executeUpdate();
+			preSta = conn.prepareStatement(sql2);
+			preSta.setString (1, maSK);
+			preSta.executeUpdate();
+			preSta.close();
+		} catch (Exception e){
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
 }
