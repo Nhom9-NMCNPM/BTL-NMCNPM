@@ -101,4 +101,31 @@ public class AdminDAO {
 		}
 
 	}
+	public void getTaoSuKien(Connection conn, String idSK, String nameSK, String ngaySK, String time) {
+		String sql=" Insert into SuKien values (?, ?, ?, ?)";
+
+		PreparedStatement preSta;
+		try {
+			preSta = conn.prepareStatement(sql);
+			preSta.setString(1, idSK);
+			preSta.setString(2, nameSK);
+			preSta.setString(3, time);
+			preSta.setString(4, ngaySK);
+			int x= preSta.executeUpdate();
+			if (x!=0) {
+				int j;
+				ArrayList<String> listSHK= getListSHK(conn);
+				for (String i: listSHK) {
+					String sql1="Insert into ThamGia([id_SK],[id_SHK]) values(?, ?)";
+					preSta = conn.prepareStatement(sql1);
+					preSta.setString(1, idSK);
+					preSta.setString(2, i);
+					j= preSta.executeUpdate();
+				}
+			}
+			preSta.close();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,e.getMessage());
+		}
+	}
 }
