@@ -66,6 +66,23 @@ public class AdminDAO {
 		return listThamGia;
 	}
 	
+	public boolean ktTonTai(Connection conn,String idSK) {
+		String sql="Select id_SK from SuKien where id_SK='"+idSK+"'";
+		Statement statement;
+		try {
+			statement= conn.createStatement();
+			ResultSet rs= statement.executeQuery(sql);
+			if (rs.next()) {
+				return true;
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		return false;
+	}
+	
 	public ArrayList<String> getListSHK(Connection conn){
 		ArrayList<String> listSHK= new ArrayList<String>();
 		String sql="Select id_SHK from SoHoKhau";
@@ -101,6 +118,24 @@ public class AdminDAO {
 		}
 
 	}
+	
+	public static String getChuHo(Connection conn,String maSHK) {
+		String name = null;
+		String sql = "select TenChuHo from SoHoKhau where id_SHK = ?";
+		try {
+			PreparedStatement preSta = conn.prepareStatement(sql);
+			preSta.setString(1, maSHK);
+			ResultSet result = preSta.executeQuery();
+			result.next();
+			name = result.getString(1);
+			result.close();
+			preSta.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return name;
+	}
+	
 	public void getTaoSuKien(Connection conn, String idSK, String nameSK, String ngaySK, String time) {
 		String sql=" Insert into SuKien values (?, ?, ?, ?)";
 
@@ -128,4 +163,55 @@ public class AdminDAO {
 			JOptionPane.showMessageDialog(null,e.getMessage());
 		}
 	}
+	
+	public ArrayList<String> getNhanKhau(Connection conn, String maSHK){
+		ArrayList<String> listNK = new ArrayList<String>();
+		String sql = "Select NamePerson from Person where id_SHK = '"+maSHK+"'";
+		try {
+			Statement sta = conn.createStatement();
+			ResultSet result = sta.executeQuery(sql);
+			while(result.next()) {
+				listNK.add(result.getString(1));
+			}
+			listNK.add("");
+			result.close();
+			sta.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return listNK;
+	}
+
+	public ArrayList<SuKien> getSKBangTK(Connection conn, String txt, int tool){
+		ArrayList<SuKien> listSK = new ArrayList<SuKien>();
+		String sql = "Select * from SuKien where ";
+		switch (tool) {
+		case 0:
+			sql += "id_SK like '%"+txt+"%' ORDER BY NameSK";
+			break;
+		case 1:
+			sql += "NameSK like N'%"+txt+"%' ORDER BY NameSK";
+			break;
+		case 2:
+			sql += "NgayBD like '%"+txt+"%' ORDER BY NameSK";
+		}
+		try {
+			Statement sta = conn.createStatement();
+			ResultSet result = sta.executeQuery(sql);
+			while(result.next()) {
+				SuKien sk = new SuKien();
+				sk.setIdSK(result.getString(1));
+				sk.setNameSK(result.getString(2));
+				sk.setTime(result.getTime(3));
+				sk.setNgaySK(result.getDate(4));
+				listSK.add(sk);
+			}
+			result.close();
+			sta.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return listSK;
+	}
+
 }
