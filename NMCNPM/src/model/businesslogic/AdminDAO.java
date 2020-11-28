@@ -213,5 +213,28 @@ public class AdminDAO {
 		}
 		return listSK;
 	}
+	
+public void updateStatus(Connection conn, String idSK, String idSHK ,boolean value) {
+		
+		try {
+			String sql = "Update ThamGia Set Status = '"+value+"' where id_SK = ? AND id_SHK = ?";
+			PreparedStatement preSta = conn.prepareStatement(sql);
+			preSta.setString(1, idSK);
+			preSta.setString(2, idSHK);
+			int z = preSta.executeUpdate();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void updateDiaDien(Connection conn, String idSK, String idSHK ,String value) {
+		String sql = "Update ThamGia Set [NguoiDaiDien] = N'"+value+"' where (id_SK = '"+idSK+"' and id_SHK = '"+idSHK+"')";
+		try {
+			Statement sta = conn.createStatement();
+			int x = sta.executeUpdate(sql);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
 }
