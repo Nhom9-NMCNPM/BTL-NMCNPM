@@ -3,6 +3,7 @@ package model.bean;
 public class ThongKe extends SoHoKhau {
 
 	private int solan;
+	
 
 	public ThongKe(String idSHK, String chuHo, String diaChi, String eMail, int solan) {
 		super(idSHK, chuHo, diaChi, eMail);
