@@ -1,4 +1,4 @@
-package model.bussinesslogic;
+package model.businesslogic;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
