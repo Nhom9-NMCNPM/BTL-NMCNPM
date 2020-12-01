@@ -226,7 +226,7 @@ public void updateStatus(Connection conn, String idSK, String idSHK ,boolean val
 		}
 	}
 	
-	public void updateDiaDien(Connection conn, String idSK, String idSHK ,String value) {
+	public void updateDaiDien(Connection conn, String idSK, String idSHK ,String value) {
 		String sql = "Update ThamGia Set [NguoiDaiDien] = N'"+value+"' where (id_SK = '"+idSK+"' and id_SHK = '"+idSHK+"')";
 		try {
 			Statement sta = conn.createStatement();
