@@ -236,4 +236,14 @@ public void updateStatus(Connection conn, String idSK, String idSHK ,boolean val
 		}
 	}
 
+	public void upDateAll(Connection conn,String maSK, boolean value) {
+		String sql = "Update ThamGia Set Status = '"+value+"' where id_SK = '"+maSK+"'";
+		try {
+			Statement sta = conn.createStatement();
+			int x = sta.executeUpdate(sql);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
 }
