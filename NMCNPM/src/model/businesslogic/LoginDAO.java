@@ -28,10 +28,13 @@ public class LoginDAO {
 		}
 		return null;
 	}
-	public boolean chuyenTrang(String user) {
+	public int chuyenTrang(String user) {
 		if((user.equalsIgnoreCase("cbToTruong")) || (user.equalsIgnoreCase("cbToPho")) || (user.equalsIgnoreCase("cbHanhChinh"))) {
-			return true;
+			return 1;
 		}
-		return false;
+		else if(user.contains("shk")) {
+			return 0;
+		}
+		return -1;
 	}
 }
