@@ -269,4 +269,29 @@ public void updateStatus(Connection conn, String idSK, String idSHK ,boolean val
 		return null;
 	}
 	
+	public boolean xuLyNgay(int day,int month, int year) {
+		switch(month){
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			return day<=31;
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			return day<=30;
+		case 2:
+			if( year%4 == 0 && year%100 != 0 || year%400 == 0) {
+				return day<=29;
+			}
+			else {
+				return day<=28;
+			}
+		}
+		return false;
+	}
 }
