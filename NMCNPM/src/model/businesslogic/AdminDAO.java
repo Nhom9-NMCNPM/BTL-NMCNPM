@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+import model.bean.CanBo;
 import model.bean.SuKien;
 import model.bean.ThamGia;
 
@@ -244,6 +245,28 @@ public void updateStatus(Connection conn, String idSK, String idSHK ,boolean val
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+	public static CanBo getCanBo(Connection conn,String idCB) {
+		try {
+			String sql = "select cb.id_CB,p.NamePerson,p.BirthDay,cb.ChucVu,cb.Phone,cb.Email from CanBo cb,Person p "
+					+ "where (cb.id_Person = p.id_Person and cb.id_CB = '"+idCB+"')";
+			Statement sta = conn.createStatement();
+			ResultSet result = sta.executeQuery(sql);
+			if(result.next()) {
+				CanBo cb = new CanBo();
+				cb.setMaCB(result.getString(1));
+				cb.setTenCB(result.getString(2));
+				cb.setBirthCB(result.getDate(3));
+				cb.setChucVu(result.getString(4));
+				cb.setPhone(result.getString(5));
+				cb.setEmail(result.getString(6));
+				return cb;
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return null;
 	}
 	
 }
