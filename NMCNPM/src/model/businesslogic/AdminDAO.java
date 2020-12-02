@@ -6,6 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 
 import model.bean.CanBo;
@@ -314,5 +324,58 @@ public void updateStatus(Connection conn, String idSK, String idSHK ,boolean val
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return listG;
+	}
+	
+	public boolean sendTB(Connection conn,String ngayBD,String time,String tenSK) {
+		ArrayList<SoHoKhau> listG = getGmail(conn);
+		boolean check = true;
+		for(SoHoKhau shk: listG) {
+			check = sendMail(shk.geteMail(), shk.getChuHo(), ngayBD, tenSK, time);
+			if(check == false) {
+				break;
+			}
+		}
+		return check;
+	}
+	
+	public boolean sendMail(String address,String chuHo, String ngayBD, String tenSK,String time) {
+		String title = "Họp dân phố ngày " +ngayBD;
+		String noiDung = "Xin chào hộ gia đình: " + chuHo+"\n"
+							+"Bạn có cuộc họp dân phố vào hồi: "+time+" ngày: "+ngayBD+".\n"
+							+"Tại nhà văn hóa phường Đống Đa\n"
+							+"Nội dung: "+tenSK+".\n"
+							+"Rất mong có sự tham gia của người đại diện cho gia đình";
+		
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.socketFactory.port", 465);
+		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.port", 587);
+		// get Session
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			// @Override
+
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication("angelababy0379032830@gmail.com", "chau737701");
+			}
+		});
+
+		MimeMessage message = new MimeMessage(session);
+		try {
+			message.setFrom(new InternetAddress("angelababy0379032830@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
+			message.setSubject(title);
+			message.setText(noiDung);
+			Transport.send(message);
+		} catch (AddressException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+			return false;
+		} catch (MessagingException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
 	}
 }
