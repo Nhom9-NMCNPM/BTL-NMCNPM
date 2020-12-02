@@ -2,14 +2,34 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.sql.Connection;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class NewSK extends JDialog {
+import model.businesslogic.AdminDAO;
+import view.NewSK.PressKey;
 
+public class NewSK extends JDialog {
+	private static final long serialVersionUID = 1L;
+	private JTextField txtMaSK;
+	private JTextField txtNameSK;
+	private AdminDAO adminDao = new AdminDAO();
+	private static Connection conn = null;
+	private JComboBox<Integer> cbDay = new JComboBox<Integer>();
+	private JComboBox<Integer> cbMonth = new JComboBox<Integer>();
+	private JComboBox<Integer> cbYear = new JComboBox<Integer>();
+	private JComboBox<Integer> cbGio = new JComboBox<Integer>();
+	private JComboBox<Integer> cbPhut = new JComboBox<Integer>();
+	private JButton btnExit = new JButton("Thoát");
+	private JButton btnAdd = new JButton("Tạo");
+	private PressKey press;
 	private final JPanel contentPanel = new JPanel();
 
 	/**
@@ -17,7 +37,7 @@ public class NewSK extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			NewSK dialog = new NewSK();
+			NewSK dialog = new NewSK(conn);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -28,7 +48,7 @@ public class NewSK extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public NewSK() {
+	public NewSK(Connection conn) {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
@@ -50,6 +70,23 @@ public class NewSK extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	public class PressKey implements KeyListener{
+
+		public void keyTyped(KeyEvent e) {
+		
+		}
+
+		public void keyPressed(KeyEvent e) {
+			if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				btnAdd.doClick();
+			}
+		}
+
+		public void keyReleased(KeyEvent e) {
+			
+		}	
 	}
 
 }
