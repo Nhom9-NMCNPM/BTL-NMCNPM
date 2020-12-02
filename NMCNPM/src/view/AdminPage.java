@@ -113,5 +113,68 @@ public class AdminPage extends JFrame {
 		
 		setVisible(true);
 	}
+	
+	public void start() {
+		switch(iSL) {
+			case 1:
+				btnHome.setBackground(Color.CYAN);
+				btnQL.setBackground(null);
+				btnTK.setBackground(null);
+				break;
+			case 2:
+				btnHome.setBackground(null);
+				btnQL.setBackground(Color.CYAN);
+				btnTK.setBackground(null);
+				break;
+			case 3:
+				btnHome.setBackground(null);
+				btnQL.setBackground(null);
+				btnTK.setBackground(Color.CYAN);
+				break;
+		}
+	}
 
+	private void addEvents() {
+		btnDX.addActionListener(new ActionListener() {
+			  
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new LoginPage();
+				dispose();
+			}
+		});
+		btnQL.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				iSL = 2;
+				start();
+				pnR.removeAll();
+				pnR.add(new AdminQL(conn), BorderLayout.CENTER);
+				pnR.updateUI();
+			}
+		});
+		btnHome.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				iSL = 1;
+				start();
+				pnR.removeAll();
+				pnR.add(new InformationAdmin(conn, user),BorderLayout.CENTER);
+				pnR.updateUI();
+			}
+		});
+		btnTK.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				iSL = 3;
+				start();
+				pnR.removeAll();
+				pnR.add(new ThongKeVH(conn),BorderLayout.CENTER);
+				pnR.updateUI();
+			}
+		});
+	}
 }
