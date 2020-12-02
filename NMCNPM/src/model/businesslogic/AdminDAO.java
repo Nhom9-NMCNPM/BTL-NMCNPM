@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import model.bean.CanBo;
+import model.bean.SoHoKhau;
 import model.bean.SuKien;
 import model.bean.ThamGia;
 
@@ -293,5 +294,25 @@ public void updateStatus(Connection conn, String idSK, String idSHK ,boolean val
 			}
 		}
 		return false;
+	}
+	
+	public ArrayList<SoHoKhau> getGmail(Connection conn){
+		ArrayList<SoHoKhau> listG = new ArrayList<SoHoKhau>();
+		String sql = "Select TenChuHo,Email from SoHoKhau where Email is NOT null";
+		try {
+			Statement sta = conn.createStatement();
+			ResultSet result = sta.executeQuery(sql);
+			while(result.next()) {
+				SoHoKhau shk = new SoHoKhau();
+				shk.setChuHo(result.getString(1));
+				shk.seteMail(result.getString(2));
+				listG.add(shk);
+			}
+			result.close();
+			sta.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return listG;
 	}
 }
