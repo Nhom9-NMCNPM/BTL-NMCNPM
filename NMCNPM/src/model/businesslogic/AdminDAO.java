@@ -26,6 +26,7 @@ import model.bean.CanBo;
 import model.bean.SoHoKhau;
 import model.bean.SuKien;
 import model.bean.ThamGia;
+import model.bean.ThongKe;
 
 public class AdminDAO {
 	
@@ -417,5 +418,61 @@ public void updateStatus(Connection conn, String idSK, String idSHK ,boolean val
 			JOptionPane.showMessageDialog(null, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
 		}
 		return false;
+	}
+	
+	public void ChangeSK(Connection conn,String idSK,String nameSK,String date,String time) {
+		String sql = "UPDATE SuKien SET NameSK = ?,ThoiGian = ?,NgayBD = ? WHERE id_SK = ?";
+		try {
+			PreparedStatement preSta = conn.prepareStatement(sql);
+			preSta.setString(1, nameSK);
+			preSta.setString(2, time);
+			preSta.setString(3, date);
+			preSta.setString(4, idSK);
+			int x = preSta.executeUpdate();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	public ArrayList<ThongKe> getThongKe(Connection conn){
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		ArrayList<ThongKe> listTK = new ArrayList<ThongKe>();
+		String sql = "select shk.id_SHK,shk.TenChuHo,COUNT(shk.id_SHK) as 'SoLan' from SuKien sk,ThamGia tg, SoHoKhau shk "
+				+ "			where sk.id_SK = tg.id_SK and shk.id_SHK = tg.id_SHK and Status = 'true' and YEAR(sk.NgayBD) = "+year+" "
+				+ "			group by shk.id_SHK,shk.TenChuHo order by SoLan Desc";
+		try {
+			Statement sta = conn.createStatement();
+			ResultSet result = sta.executeQuery(sql);
+			while(result.next()) {
+				ThongKe tk= new ThongKe();
+				tk.setIdSHK(result.getString(1));
+				tk.setChuHo(result.getString(2));
+				tk.setSolan(result.getInt(3));
+				listTK.add(tk);
+			}
+			result.close();
+			sta.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return listTK;
+	}
+	public int soSK(Connection conn) {
+		int t=0;
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		String sql="select count(*) from SuKien where YEAR(NgayBD) = "+year+"";
+		try {
+			PreparedStatement preSta = conn.prepareStatement(sql);
+			ResultSet result = preSta.executeQuery();
+			while(result.next()) {
+				t = result.getInt(1);
+			}
+			result.close();
+			preSta.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return t;
 	}
 }
