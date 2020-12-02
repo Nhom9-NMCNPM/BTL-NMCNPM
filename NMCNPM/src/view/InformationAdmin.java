@@ -14,6 +14,7 @@ public class InformationAdmin extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	public InformationAdmin(Connection conn,String user) {
 
