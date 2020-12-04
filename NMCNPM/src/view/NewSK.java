@@ -72,6 +72,52 @@ public class NewSK extends JDialog {
 		}
 	}
 	
+	private void addEvents() {
+		btnAdd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				xuLyThem();
+			}
+		});
+		btnExit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+	}
+	
+	protected void xuLyThem() {
+		if (txtMaSK.getText().length() == 0 || txtNameSK.getText().length() == 0) {
+			JOptionPane.showMessageDialog(null, "Nhập thiếu dữ liệu!");
+			return;
+		}
+		else{
+			if (adminDao.ktTonTai(conn, txtMaSK.getText())== true) {
+				JOptionPane.showMessageDialog(null, "Trùng mã sự kiện");
+				txtMaSK.setText("");
+			}
+			else {
+				int day= (int) cbDay.getSelectedItem();
+				int month= (int) cbMonth.getSelectedItem();
+				int year= (int) cbYear.getSelectedItem();
+				String ngaySK= year+"-"+ month+"-"+day;
+				boolean check= adminDao.xuLyNgay(day, month, year);
+				int gio = (int) cbGio.getSelectedItem();
+				int phut = (int) cbPhut.getSelectedItem();
+				String time = gio+":"+phut+":"+"00";
+				if (check== true) {
+					adminDao.getTaoSuKien(conn, txtMaSK.getText(), txtNameSK.getText(), ngaySK, time);
+					dispose();
+				}
+				else 
+					JOptionPane.showMessageDialog(null, "Định dạng ngày không đúng");
+			}
+		}
+	}
+	
 	public class PressKey implements KeyListener{
 
 		public void keyTyped(KeyEvent e) {
