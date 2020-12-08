@@ -1,10 +1,19 @@
 package view;
 
+
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Connection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -41,6 +50,46 @@ public class ChangeSK extends JDialog {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
+	}
+	
+	private void addEvents() {
+		btnU.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				xuLyChange();
+			}
+		});
+		btnExit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+	}
+	
+	protected void xuLyChange() {
+		if (txtNameSK.getText().length() == 0) {
+			JOptionPane.showMessageDialog(null, "Nhập thiếu dữ liệu!");
+			return;
+		}
+		else{
+			int day= (int) cbDay.getSelectedItem();
+			int month= (int) cbMonth.getSelectedItem();
+			int year= (int) cbYear.getSelectedItem();
+			String ngaySK= year+"-"+ month+"-"+day;
+			boolean check= adminDao.xuLyNgay(day, month, year);
+			int gio = (int) cbGio.getSelectedItem();
+			int phut = (int) cbPhut.getSelectedItem();
+			String time = gio+":"+phut+":"+"00";
+			if (check== true) {
+				adminDao.ChangeSK(conn, maSK, txtNameSK.getText(), ngaySK, time);
+				dispose();
+			}
+			else 
+				JOptionPane.showMessageDialog(null, "Định dạng ngày không đúng");
+		}
 	}
 	
 	public class PressKey implements KeyListener{
