@@ -207,28 +207,28 @@ public class AdminQL extends JPanel {
 			}
 		});
 		
-//		btnUpdate.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if(maSK != null)
-//					new UpdateSK(maSK, nameSK, conn);
-//			}
-//		});
-//		
-//		btnSearch.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				String txt = txtSearch.getText();
-//				if (txt == null) {
-//					addTable();
-//				}
-//				else
-//					xuLyTim(txt, tool);
-//				txtSearch.setText("");
-//			}
-//		});
+		btnUpdate.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(maSK != null)
+					new UpdateSK(maSK, nameSK, conn);
+			}
+		});
+		
+		btnSearch.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String txt = txtSearch.getText();
+				if (txt == null) {
+					addTable();
+				}
+				else
+					xuLyTim(txt, tool);
+				txtSearch.setText("");
+			}
+		});
 		
 		cbSearch.addActionListener(new ActionListener() {
 			
@@ -299,6 +299,21 @@ public class AdminQL extends JPanel {
 			}
 		});
 		
+	}
+	protected void xuLyTim(String txt, int tool) {
+		reset();
+		dtm.setRowCount(0);
+		ArrayList<SuKien> listSK = adminDao.getSKBangTK(conn, txt, tool);
+		int size = listSK.size();
+		for(int i = 0; i<size ; i++) {
+			Vector<Object> vec = new Vector<Object>();
+			vec.add(i+1);
+			vec.add(listSK.get(i).getIdSK());
+			vec.add(listSK.get(i).getNameSK());
+			vec.add(sdf1.format(listSK.get(i).getTime()));
+			vec.add(sdf.format(listSK.get(i).getNgaySK()));
+			dtm.addRow(vec);
+		}
 	}
 	
 	protected void reset() {
