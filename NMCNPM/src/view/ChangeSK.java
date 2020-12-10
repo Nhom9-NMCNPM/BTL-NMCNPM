@@ -51,6 +51,7 @@ public class ChangeSK extends JDialog {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
+		
 	}
 	
 	private void addEvents() {
