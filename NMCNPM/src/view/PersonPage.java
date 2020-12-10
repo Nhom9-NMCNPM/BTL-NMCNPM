@@ -107,4 +107,12 @@ public class PersonPage extends JFrame {
 		start();
 		setVisible(true);
 	}
+
+	private void start() {
+		
+	}
+
+	private void addEvents() {
+		
+	}
 }
