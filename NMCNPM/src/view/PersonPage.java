@@ -109,10 +109,65 @@ public class PersonPage extends JFrame {
 	}
 
 	private void start() {
-		
+		switch(iSL) {
+		case 1:
+			btnHome.setBackground(Color.CYAN);
+			btnQL.setBackground(null);
+			btnCB.setBackground(null);
+			break;
+		case 2:
+			btnHome.setBackground(null);
+			btnQL.setBackground(Color.CYAN);
+			btnCB.setBackground(null);
+			break;
+		case 3:
+			btnHome.setBackground(null);
+			btnQL.setBackground(null);
+			btnCB.setBackground(Color.CYAN);
+			break;
+	}
 	}
 
 	private void addEvents() {
-		
+btnDX.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new LoginPage();
+				dispose();
+			}
+		});
+		btnQL.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				iSL = 2;
+				start();
+				pnR.removeAll();
+				pnR.add(new ThamGiaSK(conn, user));
+				pnR.updateUI();
+			}
+		});
+		btnHome.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				iSL = 1;
+				start();
+				pnR.removeAll();
+				pnR.add(new InformationPerson(conn, user));
+				pnR.updateUI();
+			}
+		});
+		btnCB.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				iSL = 3;
+				start();
+				pnR.removeAll();
+				pnR.add(new PersonDSCB(conn));
+				pnR.updateUI();
+			}
+		});
 	}
 }
