@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Connection;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -105,6 +106,16 @@ public class NewSK extends JDialog {
 		}
 		getContentPane().add(cbYear);
 		
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		int mo = cal.get(Calendar.MONTH)+1;
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int h = cal.get(Calendar.HOUR);
+		int m = cal.get(Calendar.MINUTE);
+		cbYear.setSelectedItem(year);
+		cbMonth.setSelectedItem(mo);
+		cbDay.setSelectedItem(day);
+		
 		JLabel lbTime = new JLabel("Thời gian:");
 		lbTime.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lbTime.setBounds(120, 299, 128, 30);
@@ -126,7 +137,8 @@ public class NewSK extends JDialog {
 			cbPhut.addItem(i);;
 		}
 		getContentPane().add(cbPhut);
-		
+		cbGio.setSelectedItem(h);
+		cbPhut.setSelectedItem(m);
 		JLabel lbPhut = new JLabel("Phút");
 		lbPhut.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lbPhut.setBounds(401, 299, 56, 30);
