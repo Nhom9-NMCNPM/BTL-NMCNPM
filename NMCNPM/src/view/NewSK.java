@@ -126,7 +126,6 @@ public class NewSK extends JDialog {
 			cbGio.addItem(i);
 		}
 		getContentPane().add(cbGio);
-		
 		JLabel lbGio = new JLabel("Giờ");
 		lbGio.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lbGio.setBounds(310, 299, 38, 30);
