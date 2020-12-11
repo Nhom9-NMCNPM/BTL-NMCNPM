@@ -189,7 +189,6 @@ public class AdminDAO {
 			while(result.next()) {
 				listNK.add(result.getString(1));
 			}
-			listNK.add("");
 			result.close();
 			sta.close();
 		} catch (Exception e) {
