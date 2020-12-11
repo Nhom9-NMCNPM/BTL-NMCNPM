@@ -384,39 +384,32 @@ public void updateStatus(Connection conn, String idSK, String idSHK ,boolean val
 	}
 	
 	public boolean checkDate(String date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		try {
-			Date ngayBD = sdf.parse(date);
-			Calendar cal = Calendar.getInstance();
-			Date current = cal.getTime();
-			int yc = current.getYear();
-			int mc = current.getMonth();
-			int dc = current.getDay();
-			int yBD = ngayBD.getYear();
-			int mBD = ngayBD.getMonth();
-			int dBD = ngayBD.getDay();
-			if(yc > yBD)
+		Calendar cal = Calendar.getInstance();
+		int yc = cal.get(Calendar.YEAR);
+		int mc = cal.get(Calendar.MONTH)+1;
+		int dc = cal.get(Calendar.DAY_OF_MONTH);
+		String bd[] = date.split("-");
+		int yBD = Integer.valueOf(bd[2]);
+		int mBD = Integer.valueOf(bd[1]);
+		int dBD = Integer.valueOf(bd[0]);
+		if(yc > yBD)
+			return false;
+		else if(yc == yBD){
+			if( mc > mBD)
 				return false;
-			else if(yc == yBD){
-				if( mc > mBD)
+			else if(mc == mBD){
+				if(dc >= dBD)
 					return false;
-				else if(mc == mBD){
-					if(dc >= dBD)
-						return false;
-					else
-						return true;
-				}
-				else {
+				else
 					return true;
-				}
 			}
 			else {
 				return true;
 			}
-		} catch (ParseException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
 		}
-		return false;
+		else {
+			return true;
+		}
 	}
 	
 	public void ChangeSK(Connection conn,String idSK,String nameSK,String date,String time) {
