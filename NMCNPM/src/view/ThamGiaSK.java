@@ -99,9 +99,9 @@ public class ThamGiaSK extends JPanel {
 		for(int i = 0; i<size ; i++) {
 			Vector<Object> vec = new Vector<Object>();
 			vec.add(i+1);
-			vec.add(list.get(i).getTenSK());
+			vec.add(list.get(i).getNameSK());
 			vec.add(sdf1.format(list.get(i).getTime()));
-			vec.add(sdf.format(list.get(i).getNgay()));
+			vec.add(sdf.format(list.get(i).getNgaySK()));
 			vec.add(list.get(i).getStatus());
 			vec.add(list.get(i).getNguoiDaiDien());
 			dtm.addRow(vec);

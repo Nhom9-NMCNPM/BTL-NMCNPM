@@ -220,7 +220,7 @@ public class UpdateSK extends JDialog {
 			vec.add(listTG.get(i).getIdSHK());
 			vec.add(listTG.get(i).getChuHo());
 			vec.add(listTG.get(i).getStatus());
-			vec.add(listTG.get(i).getDaiDien());
+			vec.add(listTG.get(i).getNguoiDaiDien());
 			dtm.addRow(vec);
 		}
 	}

@@ -68,7 +68,7 @@ public class AdminDAO {
 				tg.setIdSHK(shk);
 				tg.setChuHo(ch);
 				tg.setStatus(tt);
-				tg.setDaiDien(ng);
+				tg.setNguoiDaiDien(ng);
 				listThamGia.add(tg);
 			}
 			result.close();

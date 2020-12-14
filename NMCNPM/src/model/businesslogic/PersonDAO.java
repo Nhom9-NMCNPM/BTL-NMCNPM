@@ -66,9 +66,9 @@ public class PersonDAO {
 			ResultSet result = sta.executeQuery(sql);
 			while(result.next()) {
 				SKTheoHo sk = new SKTheoHo();
-				sk.setTenSK(result.getString(1));
+				sk.setNameSK(result.getString(1));
 				sk.setTime(result.getTime(2));
-				sk.setNgay(result.getDate(3));
+				sk.setNgaySK(result.getDate(3));
 				sk.setStatus(result.getBoolean(4));
 				sk.setNguoiDaiDien(result.getString(5));
 				list.add(sk);
