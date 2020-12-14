@@ -50,7 +50,7 @@ public class LoginPage extends JFrame {
 	}
 	
 	public LoginPage() {
-		super("NMCNPM2");
+		super("NMCNPM");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(600, 370);
 		setLocationRelativeTo(null);

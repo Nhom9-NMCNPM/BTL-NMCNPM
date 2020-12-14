@@ -133,6 +133,7 @@ public class UpdateSK extends JDialog {
 		    		fireTableCellUpdated(row, column);
 		    		String shk = (String) table.getValueAt(row, 1);
 		    		adminDA0.updateStatus(conn, maSK, shk, (boolean)aValue);
+		    		addTable();
 		    	}
 		    	if (column == 4) {
 		    		Vector rowData = (Vector)getDataVector().get(row);
@@ -142,9 +143,7 @@ public class UpdateSK extends JDialog {
 		    		if((String)aValue != null && k == true) {
 		    			adminDA0.updateDaiDien(conn, maSK, maSHK, (String)aValue);
 		    		}
-		    		else {
-		    			addTable();
-		    		}
+		    		addTable();
 		    	}
 		    }
 		};

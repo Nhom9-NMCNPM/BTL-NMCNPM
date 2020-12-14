@@ -229,7 +229,13 @@ public class AdminDAO {
 public void updateStatus(Connection conn, String idSK, String idSHK ,boolean value) {
 		
 		try {
-			String sql = "Update ThamGia Set Status = '"+value+"' where id_SK = ? AND id_SHK = ?";
+			String sql;
+			if( value) {
+				sql = "Update ThamGia Set Status = '"+value+"' where id_SK = ? AND id_SHK = ?";
+			}
+			else {
+				sql = "Update ThamGia Set Status = '"+value+"',NguoiDaiDien = N'' where id_SK = ? AND id_SHK = ?";
+			}
 			PreparedStatement preSta = conn.prepareStatement(sql);
 			preSta.setString(1, idSK);
 			preSta.setString(2, idSHK);
